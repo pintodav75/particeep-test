@@ -7,7 +7,7 @@ import {
 const initialState = movies;
 
 const moviesReducer = (state = initialState, action) => {
-    if (action.type == DELETE_MOVIE || action.type == DELETE_LAST_MOVIE) {
+    if (action.type === DELETE_MOVIE || action.type === DELETE_LAST_MOVIE) {
         return state.filter((m) => m.id !== action.payload.id);
     }
     

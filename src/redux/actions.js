@@ -2,6 +2,7 @@ import {
   UPDATE_FILTER,
   DELETE_MOVIE,
   DELETE_LAST_MOVIE,
+  SET_PAGE,
 } from "./actionTypes";
 
 export const updateFilter = category => ({
@@ -22,5 +23,13 @@ export const deleteLastMovie = id => ({
   type: DELETE_LAST_MOVIE,
   payload: {
     id
+  }
+});
+
+
+export const setPage = page => ({
+  type: SET_PAGE,
+  payload: {
+    page
   }
 });

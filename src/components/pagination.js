@@ -1,27 +1,38 @@
-import * as React from 'react';
-import TablePagination from '@mui/material/TablePagination';
+import { connect } from 'react-redux'
 
-export default function TablePaginationDemo() {
-  const [page, setPage] = React.useState(2);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+import * as React from 'react';
+import Pagination from '@mui/material/Pagination';
+
+import { setPage } from '../redux/actions';
+
+const PaginationComponent = ({ movies, page, filter, setPage }) => {
+  const moviesFiltered = movies.filter(m => {
+    if (filter === '') return true;
+    return (m.category === filter)
+})
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    setPage(newPage)
   };
 
   return (
-    <TablePagination
+    <Pagination
       component="div"
-      count={100}
+      count={Math.ceil(moviesFiltered.length / 4)}
       page={page}
-      onPageChange={handleChangePage}
-      rowsPerPage={rowsPerPage}
-      onRowsPerPageChange={handleChangeRowsPerPage}
+      onChange={handleChangePage}
+      defaultPage={page}
     />
   );
 }
+
+const mapStateToProps = (state) => ({
+  movies: state.movies,
+  page: state.pagination.page,
+  filter: state.filter,
+})
+
+export default connect(
+  mapStateToProps,
+  { setPage }
+)(PaginationComponent);
