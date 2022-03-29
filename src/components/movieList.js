@@ -1,6 +1,17 @@
 import { connect } from 'react-redux'
 import { deleteMovie, deleteLastMovie } from '../redux/actions'
 import LinearProgress from '@mui/material/LinearProgress';
+import '../css/movies.css'
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Grid from '@mui/material/Grid';
+
 
 
 const lastMovieInCategory = (movies, category) => {
@@ -15,8 +26,7 @@ const LikeBar = ({ likes, dislikes }) => {
 
     return (
         <>
-            <LinearProgress value={result} variant={'determinate'} />
-            <div>{result}</div>
+            <LinearProgress color='success' value={result} variant={'determinate'} />
         </>
     )
 }
@@ -30,23 +40,59 @@ const MovieList = ({  movies, filter, deleteSimple, deleteLast, page }) => {
     const moviesFilteredPaged = moviesFiltered.splice((page-1)*4, 4)
 
     return (
-    <div>
-        List de films
-        {moviesFilteredPaged.map((m) => {
-            return (
-            <div key={m.id} >
-                {m.title} [{m.category}] -{m.dislikes}  +{m.likes} 
-                <LikeBar likes={m.likes} dislikes={m.dislikes} />
-                <button onClick={() => {
-                    if (lastMovieInCategory(movies, m.category))
-                        deleteLast(m.id)
-                    else
-                        deleteSimple(m.id)
-                }}>Delete</button>
-            </div>
-            )
-        })}
-    </div>
+    // <div class="main">
+    //     {moviesFilteredPaged.map((m) => {
+    //         return (
+    //         <div key={m.id} >
+    //             {m.title} [{m.category}] -{m.dislikes}  +{m.likes} 
+    //             <LikeBar likes={m.likes} dislikes={m.dislikes} />
+    //             <button onClick={() => {
+    //                 if (lastMovieInCategory(movies, m.category))
+    //                     deleteLast(m.id)
+    //                 else
+    //                     deleteSimple(m.id)
+    //             }}>Delete</button>
+    //         </div>
+    //         )
+    //     })}
+    // </div>
+    <div class="main" >
+                    {moviesFilteredPaged.map((m) => {
+                        return (
+                            <div style={{ padding: 5 }} >
+                            <Grid item xs={6} >
+                            <Card sx={{ minWidth: 275, padding: 2  }}>
+                                <CardContent>
+                                    <Typography variant="h5" component="div">
+                                        {m.title}
+                                    </Typography>
+                                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                                        {m.category}
+                                    </Typography>
+                                    <LikeBar likes={m.likes} dislikes={m.dislikes} />
+                                </CardContent>
+                                <CardActions>
+                                    <Button variant="contained" color="success" size="small" >
+                                        Like
+                                    </Button>
+                                    <Button variant="contained" color="error" size="small" >
+                                        Dislike
+                                    </Button>
+                                    <IconButton aria-label="delete" size="small" >
+                                        <DeleteIcon fontSize="small" onClick={() => {
+                                            if (lastMovieInCategory(movies, m.category))
+                                                deleteLast(m.id)
+                                            else
+                                                deleteSimple(m.id)
+                                        }} />
+                                    </IconButton>
+                                </CardActions>
+                            </Card>
+                            </Grid>
+                            </div>
+                        )
+                    })}
+        </div>
     );
 }
 

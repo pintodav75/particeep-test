@@ -14,42 +14,38 @@ const uniqueArray = (a) => a.filter(function(item, pos) {
 const MovieFilter = ({ movies, updateFilter }) => {
     const categories = uniqueArray(movies.map(m => m.category))
 
-    const optionFromCategory = (category) => {
-        return <option key={category} value={category}>{category}</option>
-    }
-
     const onSelect = (e) => {
         updateFilter(e.target.value)
     } 
 
     return (
-        <div>
-            <select name="category" onChange={onSelect} >
-                <option value="">--Please choose an option--</option>
-                {categories.map(optionFromCategory)}
-            </select>
-        </div>
-    //     <Box sx={{ minWidth: 120 }}>
-    //     <FormControl fullWidth>
-    //         <InputLabel id="demo-simple-select-label">Category</InputLabel>
-    //             <Select
-    //             labelId="demo-simple-select-label"
-    //             id="demo-simple-select"
-    //             value=""
-    //             label="Category"
-    //             onChange={onSelect}
-    //             >
-    //                 {categories.map((name) => (
-    //                     <MenuItem
-    //                         key={name}
-    //                         value={name}
-    //                     >
-    //                         {name}
-    //                     </MenuItem>
-    //                 ))}
-    //             </Select>
-    //     </FormControl>
-    // </Box>
+        // <div>
+        //     <select name="category" onChange={onSelect} >
+        //         <option value="">--Please choose an option--</option>
+        //         {categories.map(optionFromCategory)}
+        //     </select>
+        // </div>
+        <Box sx={{ minWidth: 120 }}>
+        <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value=""
+                    label="Category"
+                    onChange={onSelect}
+                >
+                    {categories.map((name) => (
+                        <MenuItem
+                            key={name}
+                            value={name}
+                        >
+                            {name}
+                        </MenuItem>
+                    ))}
+                </Select>
+        </FormControl>
+    </Box>
     )
 }
 

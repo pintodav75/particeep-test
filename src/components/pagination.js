@@ -22,6 +22,7 @@ const PaginationComponent = ({ movies, page, filter, setPage }) => {
       page={page}
       onChange={handleChangePage}
       defaultPage={page}
+      style={{ display: 'flex', justifyContent: "center" }}
     />
   );
 }
