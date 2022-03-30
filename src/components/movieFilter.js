@@ -11,11 +11,14 @@ const uniqueArray = (a) => a.filter(function(item, pos) {
     return a.indexOf(item) == pos;
 })
 
-const MovieFilter = ({ movies, updateFilter }) => {
+const MovieFilter = ({ movies, updateFilter, filter }) => {
     const categories = uniqueArray(movies.map(m => m.category))
 
     const onSelect = (e) => {
-        updateFilter(e.target.value)
+        if (e.target.value == undefined)
+            updateFilter('')
+        else
+            updateFilter(e.target.value)
     } 
 
     return (
@@ -31,10 +34,16 @@ const MovieFilter = ({ movies, updateFilter }) => {
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value=""
-                    label="Category"
+                    value={filter}
+                    label="All category"
                     onChange={onSelect}
                 >
+                    <MenuItem
+                        key={"41814841"}
+                        name={""}
+                        >
+                        All categories
+                    </MenuItem>
                     {categories.map((name) => (
                         <MenuItem
                             key={name}
@@ -51,6 +60,7 @@ const MovieFilter = ({ movies, updateFilter }) => {
 
 const mapStateToProps = (state) => ({
     movies: state.movies,
+    filter: state.filter,
 })
 
 export default connect(

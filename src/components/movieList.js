@@ -1,18 +1,23 @@
 import { connect } from 'react-redux'
-import { deleteMovie, deleteLastMovie } from '../redux/actions'
+import { deleteMovie, deleteLastMovie, updateLike } from '../redux/actions'
 import LinearProgress from '@mui/material/LinearProgress';
 import '../css/movies.css'
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Grid from '@mui/material/Grid';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 
 
+// const uptdateLike = (m) => {
+//     m.likes = m.likes + 1;
+//     console.log(m.likes)
+// }
 
 const lastMovieInCategory = (movies, category) => {
     const categories = movies.filter(m => m.category === category)
@@ -31,7 +36,7 @@ const LikeBar = ({ likes, dislikes }) => {
     )
 }
 
-const MovieList = ({  movies, filter, deleteSimple, deleteLast, page }) => {
+const MovieList = ({  movies, filter, deleteSimple, deleteLast, page, updateLike }) => {
     const moviesFiltered = movies.filter(m => {
         if (filter === '') return true;
         return (m.category === filter)
@@ -56,7 +61,7 @@ const MovieList = ({  movies, filter, deleteSimple, deleteLast, page }) => {
     //         )
     //     })}
     // </div>
-    <div class="main" >
+    <div className="main" >
                     {moviesFilteredPaged.map((m) => {
                         return (
                             <div style={{ padding: 5 }} >
@@ -72,12 +77,15 @@ const MovieList = ({  movies, filter, deleteSimple, deleteLast, page }) => {
                                     <LikeBar likes={m.likes} dislikes={m.dislikes} />
                                 </CardContent>
                                 <CardActions>
-                                    <Button variant="contained" color="success" size="small" >
-                                        Like
-                                    </Button>
-                                    <Button variant="contained" color="error" size="small" >
-                                        Dislike
-                                    </Button>
+                                    <IconButton variant="contained" color="success" size="small" >
+                                        <ThumbUpAltIcon onClick={() => {
+                                            updateLike(m.id)
+                                        }}
+                                        />
+                                    </IconButton>
+                                    <IconButton variant="contained" color="error" size='small' >
+                                        <ThumbDownAltIcon/>
+                                    </IconButton>
                                     <IconButton aria-label="delete" size="small" >
                                         <DeleteIcon fontSize="small" onClick={() => {
                                             if (lastMovieInCategory(movies, m.category))
@@ -104,5 +112,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps,
-    { deleteSimple: deleteMovie,  deleteLast: deleteLastMovie },
+    { deleteSimple: deleteMovie,  deleteLast: deleteLastMovie, updateLike: updateLike },
 )(MovieList);
