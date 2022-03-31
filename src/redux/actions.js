@@ -6,7 +6,6 @@ import {
   UPDATE_LIKE,
   UPDATE_DISLIKE,
 } from "./actionTypes";
-import movies from "../movies";
 
 
 export const updateFilter = category => ({

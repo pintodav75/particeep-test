@@ -1,4 +1,3 @@
-import movies from "../../movies";
 import { DELETE_LAST_MOVIE, UPDATE_FILTER } from "../actionTypes";
 
 const initialState = '';

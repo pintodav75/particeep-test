@@ -40,29 +40,10 @@ const MovieList = ({  movies, filter, deleteSimple, deleteLast, page, updateLike
     const moviesFilteredPaged = moviesFiltered.splice((page-1)*4, 4)
 
     return (
-    // <div class="main">
-    //     {moviesFilteredPaged.map((m) => {
-    //         return (
-    //         <div key={m.id} >
-    //             {m.title} [{m.category}] -{m.dislikes}  +{m.likes} 
-    //             <LikeBar likes={m.likes} dislikes={m.dislikes} />
-    //             <button onClick={() => {
-    //                 if (lastMovieInCategory(movies, m.category))
-    //                     deleteLast(m.id)
-    //                 else
-    //                     deleteSimple(m.id)
-    //             }}>Delete</button>
-    //         </div>
-    //         )
-    //     })}
-    // </div>
-    <div className="main" >
+        <div className="main" >
                     {moviesFilteredPaged.map((m) => {
-                        console.log(m.title)
-                        console.log(m.likes)
-                        console.log(m.dislikes)
                         return (
-                            <div style={{ padding: 5 }} >
+                            <div style={{ padding: 5 }} key={m.id} >
                             <Grid item xs={6} >
                             <Card sx={{ minWidth: 275, padding: 2  }}>
                                 <CardContent>
@@ -75,25 +56,23 @@ const MovieList = ({  movies, filter, deleteSimple, deleteLast, page, updateLike
                                     <LikeBar likes={m.likes} dislikes={m.dislikes} />
                                 </CardContent>
                                 <CardActions>
-                                    <IconButton variant="contained" color="success" size="small" >
-                                        <ThumbUpAltIcon onClick={() => {
+                                    <IconButton variant="contained" color="success" size="small" onClick={() => {
                                             updateLike(m.id)
-                                        }}
-                                        />
+                                        }} >
+                                        <ThumbUpAltIcon />
                                     </IconButton>
-                                    <IconButton variant="contained" color="error" size='small' >
-                                        <ThumbDownAltIcon onClick={() => {
+                                    <IconButton variant="contained" color="error" size='small' onClick={() => {
                                             updateDisLike(m.id)
-                                        }}
-                                        />
+                                        }} >
+                                        <ThumbDownAltIcon />
                                     </IconButton>
-                                    <IconButton aria-label="delete" size="small" >
-                                        <DeleteIcon fontSize="small" onClick={() => {
+                                    <IconButton aria-label="delete" size="small" onClick={() => {
                                             if (lastMovieInCategory(movies, m.category))
                                                 deleteLast(m.id)
                                             else
                                                 deleteSimple(m.id)
-                                        }} />
+                                        }}  >
+                                        <DeleteIcon fontSize="small"/>
                                     </IconButton>
                                 </CardActions>
                             </Card>
