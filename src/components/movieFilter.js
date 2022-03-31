@@ -8,14 +8,14 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 const uniqueArray = (a) => a.filter(function(item, pos) {
-    return a.indexOf(item) == pos;
+    return a.indexOf(item) === pos;
 })
 
 const MovieFilter = ({ movies, updateFilter, filter }) => {
     const categories = uniqueArray(movies.map(m => m.category))
 
     const onSelect = (e) => {
-        if (e.target.value == undefined)
+        if (e.target.value === undefined)
             updateFilter('')
         else
             updateFilter(e.target.value)

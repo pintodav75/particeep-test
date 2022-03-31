@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { deleteMovie, deleteLastMovie, updateLike } from '../redux/actions'
+import { deleteMovie, deleteLastMovie, updateLike, updateDisLike } from '../redux/actions'
 import LinearProgress from '@mui/material/LinearProgress';
 import '../css/movies.css'
 import * as React from 'react';
@@ -13,11 +13,6 @@ import Grid from '@mui/material/Grid';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 
-
-// const uptdateLike = (m) => {
-//     m.likes = m.likes + 1;
-//     console.log(m.likes)
-// }
 
 const lastMovieInCategory = (movies, category) => {
     const categories = movies.filter(m => m.category === category)
@@ -36,7 +31,7 @@ const LikeBar = ({ likes, dislikes }) => {
     )
 }
 
-const MovieList = ({  movies, filter, deleteSimple, deleteLast, page, updateLike }) => {
+const MovieList = ({  movies, filter, deleteSimple, deleteLast, page, updateLike, updateDisLike }) => {
     const moviesFiltered = movies.filter(m => {
         if (filter === '') return true;
         return (m.category === filter)
@@ -63,6 +58,9 @@ const MovieList = ({  movies, filter, deleteSimple, deleteLast, page, updateLike
     // </div>
     <div className="main" >
                     {moviesFilteredPaged.map((m) => {
+                        console.log(m.title)
+                        console.log(m.likes)
+                        console.log(m.dislikes)
                         return (
                             <div style={{ padding: 5 }} >
                             <Grid item xs={6} >
@@ -84,7 +82,10 @@ const MovieList = ({  movies, filter, deleteSimple, deleteLast, page, updateLike
                                         />
                                     </IconButton>
                                     <IconButton variant="contained" color="error" size='small' >
-                                        <ThumbDownAltIcon/>
+                                        <ThumbDownAltIcon onClick={() => {
+                                            updateDisLike(m.id)
+                                        }}
+                                        />
                                     </IconButton>
                                     <IconButton aria-label="delete" size="small" >
                                         <DeleteIcon fontSize="small" onClick={() => {
@@ -112,5 +113,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps,
-    { deleteSimple: deleteMovie,  deleteLast: deleteLastMovie, updateLike: updateLike },
+    { deleteSimple: deleteMovie,  deleteLast: deleteLastMovie, updateLike: updateLike, updateDisLike: updateDisLike },
 )(MovieList);

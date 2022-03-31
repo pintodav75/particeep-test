@@ -4,7 +4,10 @@ import {
   DELETE_LAST_MOVIE,
   SET_PAGE,
   UPDATE_LIKE,
+  UPDATE_DISLIKE,
 } from "./actionTypes";
+import movies from "../movies";
+
 
 export const updateFilter = category => ({
     type: UPDATE_FILTER,
@@ -41,3 +44,12 @@ export const updateLike = id => ({
     id
   }
 });
+
+export const updateDisLike = id => ({
+  type: UPDATE_DISLIKE,
+  payload: {
+    id
+  }
+});
+
+
