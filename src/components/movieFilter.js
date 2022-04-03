@@ -59,7 +59,7 @@ const MovieFilter = ({ movies, updateFilter, filter }) => {
 }
 
 const mapStateToProps = (state) => ({
-    movies: state.movies,
+    movies: state.movies.movies,
     filter: state.filter,
 })
 

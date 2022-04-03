@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { deleteMovie, deleteLastMovie, updateLike, updateDisLike } from '../redux/actions'
 import LinearProgress from '@mui/material/LinearProgress';
+import CircularProgress from '@mui/material/CircularProgress';
 import '../css/movies.css'
 import * as React from 'react';
 import Card from '@mui/material/Card';
@@ -31,13 +32,16 @@ const LikeBar = ({ likes, dislikes }) => {
     )
 }
 
-const MovieList = ({  movies, filter, deleteSimple, deleteLast, page, updateLike, updateDisLike }) => {
+const MovieList = ({ loading, movies, filter, deleteSimple, deleteLast, page, updateLike, updateDisLike }) => {
     const moviesFiltered = movies.filter(m => {
         if (filter === '') return true;
         return (m.category === filter)
     })
 
     const moviesFilteredPaged = moviesFiltered.splice((page-1)*4, 4)
+
+    if (loading)
+        return <CircularProgress />
 
     return (
         <div className="main" >
@@ -85,7 +89,8 @@ const MovieList = ({  movies, filter, deleteSimple, deleteLast, page, updateLike
 }
 
 const mapStateToProps = (state) => ({
-    movies: state.movies,
+    movies: state.movies.movies,
+    loading: state.movies.loadingInProgess,
     filter : state.filter,
     page: state.pagination.page,
 })

@@ -1,3 +1,4 @@
+import { movies$ } from "../movies";
 import {
   UPDATE_FILTER,
   DELETE_MOVIE,
@@ -5,6 +6,8 @@ import {
   SET_PAGE,
   UPDATE_LIKE,
   UPDATE_DISLIKE,
+  LOADING_IN_PROGRESS,
+  LOADING_MOVIES,
 } from "./actionTypes";
 
 
@@ -51,4 +54,26 @@ export const updateDisLike = id => ({
   }
 });
 
+export const getMovies = () => {
+  return dispatch => {
+     movies$.then((movies) => {
+        dispatch(loadingInProgress(false))
+        dispatch(loadingMovies(movies))
+      })
+  }
+}
 
+export const loadingMovies = movies => (
+  {
+    type: LOADING_MOVIES,
+    payload: { movies }
+  }
+)
+
+
+export const loadingInProgress = bool => (
+  {
+    type: LOADING_IN_PROGRESS,
+    payload: { bool }
+  }
+)

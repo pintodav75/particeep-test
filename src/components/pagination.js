@@ -28,7 +28,7 @@ const PaginationComponent = ({ movies, page, filter, setPage }) => {
 }
 
 const mapStateToProps = (state) => ({
-  movies: state.movies,
+  movies: state.movies.movies,
   page: state.pagination.page,
   filter: state.filter,
 })

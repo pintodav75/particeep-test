@@ -62,6 +62,6 @@ const movies = [
     },
   ]
 
-export default movies;
   
-  // export const movies$ = new Promise((resolve, reject) => setTimeout(resolve, 100, movies))
+  export const movies$ = new Promise((resolve, reject) => setTimeout(resolve, 3000, movies))
+  
